@@ -18,3 +18,10 @@ The game will contain:
 I'm choosing to make this memory game because I remember playing 
 it when I was a kid and it was fun. Also, it seems like it could be challenging 
 to make the user interface. 
+
+## User Stories
+
+* As a user, I would like to be able to add more pairs of cards to the game board.
+* As a user, I want to see a list of high scores.
+* As a user, I want to see my *stats*, how many games ive played. How many guesses on average per game etc.
+* As a user, I would like to see other user's stats.
