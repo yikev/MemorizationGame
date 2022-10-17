@@ -200,7 +200,7 @@ public class GameBoard {
         char yaxis = '1';
 
         for (int i = 0; i < 2; i++) {
-            result += (Character.toString(yaxis + i)) + " ";
+            result += (char) (yaxis + i) + " ";
             for (int j = 0; j < getTotalCards() / 2; j++) {
                 result += (cards[i][j]) + " ";
             }
@@ -252,7 +252,7 @@ public class GameBoard {
         String colHeading = "";
 
         for (int i = 0; i < columns; i++) {
-            colHeading += (Character.toString(letter + i) + " ");
+            colHeading += (char) (letter + i) + " ";
         }
 
         return colHeading;
