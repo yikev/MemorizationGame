@@ -15,7 +15,7 @@ public class UserAccount {
     }
 
     public String getName() {
-        return name;
+        return name.toUpperCase();
     }
 
     public int getHighestScore() {
