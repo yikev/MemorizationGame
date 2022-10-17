@@ -34,6 +34,7 @@ public class UserAccount {
      *EFFECTS: Returns a string containing the user's stats.
      *         Their highest score, average guesses and
      *         games played.
+     *
      */
     public String getUserStats() {
         return name + "'s Stats. \n" + "Highest Score: " + getHighestScore()
