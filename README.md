@@ -13,7 +13,7 @@ The game will contain:
 
 * Database of players
 * Database of player high scores
-* Game difficulty
+* Game difficulty (adding more cards)
 
 I'm choosing to make this memory game because I remember playing 
 it when I was a kid and it was fun. Also, it seems like it could be challenging 
@@ -25,3 +25,4 @@ to make the user interface.
 * As a user, I want to see a list of high scores.
 * As a user, I want to see my *stats*, how many games I've played. How many guesses on average per game etc.
 * As a user, I would like to see other user's stats.
+* As a user, I would like the option to quit the current game and go back to the main menu.
