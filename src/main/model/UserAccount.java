@@ -52,7 +52,7 @@ public class UserAccount {
      *           Updates the totalGamesPlayed and averageGuesses.
      */
     public void updateStats(int score, int guesses) {
-        if (score > getHighestScore()) {
+        if (score >= getHighestScore()) {
             highestScore = score;
         }
 
