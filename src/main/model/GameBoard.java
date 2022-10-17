@@ -248,7 +248,7 @@ public class GameBoard {
      * EFFECTS: Returns a string containing the 'x-axis' headings.
      */
     public String columnHeadings() {
-        char letter = 'A';
+        char letter = 65;                                                     //65 is ASCII capital A
         String colHeading = "";
 
         for (int i = 0; i < columns; i++) {
