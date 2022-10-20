@@ -26,3 +26,5 @@ to make the user interface.
 * As a user, I want to see my *stats*, how many games I've played. How many guesses on average per game etc.
 * As a user, I would like to see other user's stats.
 * As a user, I would like the option to quit the current game and go back to the main menu.
+* As a user, I would like the option to save all stats of all players.
+* As a user, I want to be able to re-open the application and have the same leaderboards/stats from my last session.
