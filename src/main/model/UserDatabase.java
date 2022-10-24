@@ -1,8 +1,12 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
-public class UserDatabase {
+public class UserDatabase implements Writable {
 
     private ArrayList<UserAccount> users;
 
@@ -47,4 +51,23 @@ public class UserDatabase {
         users.add(user);
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("users", usersToJson());
+        return json;
+    }
+
+    /*
+     * EFFECTS:  UserAccounts in current UserDatabase stored in jsonArray.
+     */
+    private JSONArray usersToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (UserAccount u : users) {
+            jsonArray.put(u.toJson());
+        }
+
+        return jsonArray;
+    }
 }

@@ -1,18 +1,28 @@
 package ui;
 
 import model.GameBoard;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class MemoryGame {
+    private static final String JSON_STORE = "./data/workroom.json";
     private static int BASE_CARDS = 8;
     private GameBoard memoryGame;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
-    public MemoryGame() {
+    public MemoryGame() throws FileNotFoundException {
         runGame();
     }
 
     public void runGame() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         input = new Scanner(System.in);
         System.out.println("Enter your name:");
         String name = input.next().toUpperCase();
@@ -41,7 +51,8 @@ public class MemoryGame {
     public String displayMenu() {
         return "Type 'p' to play\n 's' to check your stats\n 'l' to check leaderboards\n"
                 + "'f' to find a user and check their stats\n"
-                + "'c' to change players\n 'q' to quit\n";
+                + "'c' to change players\n 'save' to save game \n"
+                + "'load' to load userbase \n 'q' to quit\n";
     }
 
     //switch cases making many lines
@@ -67,7 +78,17 @@ public class MemoryGame {
                 break;
             case "c":
                 System.out.println("Enter your name:");
-                memoryGame.changeUser(input.next().toUpperCase()); // might to modify
+                if (!memoryGame.changeUser(input.next().toUpperCase())) {
+                    System.out.println("That user already exists.");
+                }
+                break;
+
+            case "save":
+                saveUserDataBase();
+                break;
+            case "load":
+                loadUserDataBase();
+                memoryGame.changeUser(memoryGame.getUser().getName());
                 break;
             case "q":
                 return true;
@@ -111,6 +132,33 @@ public class MemoryGame {
         System.out.println(memoryGame.displayCards(memoryGame.getHiddenCards()));
         System.out.println("Enter a guess row column such as 1a OR 'q' to quit:");
         return input.next();
+    }
+
+    /*
+     * EFFECTS:  Saves current UserDatabase to json.
+     */
+    private void saveUserDataBase() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(memoryGame.getUserBase());
+            jsonWriter.close();
+            System.out.println("Saved " + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS:  Loads a previously saved UserDatabase.
+     */
+    private void loadUserDataBase() {
+        try {
+            memoryGame.setUserBase(jsonReader.read());
+            System.out.println("Loaded " + " save from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
     /*

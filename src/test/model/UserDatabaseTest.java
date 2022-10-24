@@ -23,6 +23,7 @@ public class UserDatabaseTest {
     void testGetStats() {
         assertEquals("User does not exist.", users1.getStats("userB"));
         assertEquals(userA.getName(), users1.getList().get(0).getName());
+        assertEquals(userA.getUserStats(), users1.getStats("Bob"));
     }
 
     @Test

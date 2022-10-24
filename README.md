@@ -28,3 +28,11 @@ to make the user interface.
 * As a user, I would like the option to quit the current game and go back to the main menu.
 * As a user, I would like the option to save all stats of all players.
 * As a user, I want to be able to re-open the application and have the same leaderboards/stats from my last session.
+
+
+## References
+
+JsonSerializationDemo, https://github.com/stleary/JSON-java 
+
+TellerApp, https://github.students.cs.ubc.ca/CPSC210/TellerApp
+

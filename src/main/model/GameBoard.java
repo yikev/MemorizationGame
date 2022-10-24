@@ -86,23 +86,19 @@ public class GameBoard {
         String leaderboard = "Leaderboards \n";
         ArrayList<UserAccount> tempList = new ArrayList<>(userBase.getList());
 
-        for (int i = 0; i <= tempList.size() - 1; i++) {
-
-            int tempHighest = tempList.get(i).getHighestScore();
+        while (tempList.size() != 0) {
+            int tempHighest = tempList.get(0).getHighestScore();
             String tempUser = tempList.get(0).getName();
+            int index = 0;
 
-            for (int j = i + 1; j < tempList.size(); j++) {
+            for (int j = 1; j < tempList.size(); j++) {
                 if (tempList.get(j).getHighestScore() > tempHighest) {
                     tempHighest = tempList.get(j).getHighestScore();
                     tempUser = tempList.get(j).getName();
-                    tempList.remove(j);
-                } else {
-                    tempHighest = tempList.get(i).getHighestScore();
-                    tempUser = tempList.get(i).getName();
-                    tempList.remove(i);
+                    index = j;
                 }
-                i--;
             }
+            tempList.remove(index);
             leaderboard += tempUser + " " + tempHighest + "\n";
         }
 
@@ -298,9 +294,21 @@ public class GameBoard {
      * MODIFIES: this
      * EFFECTS:  Sets a new player to play the game.
      */
-    public void changeUser(String name) {
+    public boolean changeUser(String name) {
+
+        for (UserAccount ua : userBase.getList()) {
+            if (ua.getName().equalsIgnoreCase(name)) {
+                return false;
+            }
+        }
         UserAccount newUser = new UserAccount(name);
         userBase.addUser(newUser);
         user = newUser;
+
+        return true;
+    }
+
+    public void setUserBase(UserDatabase userBase) {
+        this.userBase = userBase;
     }
 }

@@ -130,6 +130,10 @@ class GameBoardTest {
         gb2.revealCard("1a",1);
         gb2.revealCard("2a", 2);
         assertTrue(gb2.isGameOver());
+
+        gb1.revealCard("1a", 1);
+        gb1.revealCard("2a", 2);
+        assertFalse(gb1.isGameOver());
     }
 
     @Test
@@ -150,8 +154,9 @@ class GameBoardTest {
 
     @Test
     void testChangeUser() {
-        assertEquals("user2", gb2.getUser().getName());
-        gb2.changeUser("bob");
-        assertEquals("bob", gb2.getUser().getName());
+        assertEquals("USER2", gb2.getUser().getName());
+        assertTrue(gb2.changeUser("bob"));
+        assertEquals("BOB", gb2.getUser().getName());
+        assertFalse(gb2.changeUser("user2"));
     }
 }
