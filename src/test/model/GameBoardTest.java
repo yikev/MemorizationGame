@@ -120,9 +120,16 @@ class GameBoardTest {
     @Test
     void testCheckGuesses() {
         int initialScore = gb2.getScore();
+        int gb1initialScore = gb1.getScore();
         int correctGuess = 40;
+        int wrongGuess = correctGuess / -2;
         gb2.checkGuesses("1a","2a");
         assertEquals(initialScore + correctGuess, gb2.getScore());
+
+        gb1.revealCard("1a", 1);
+        gb1.revealCard("2a",2);
+        gb1.checkGuesses("1a","2a");
+        assertEquals(gb1initialScore + wrongGuess, gb1.getScore());
     }
 
     @Test
