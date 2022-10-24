@@ -19,6 +19,11 @@ public class UserAccountTest {
         assertEquals(1, user1.getTotalGamesPlayed());
         assertEquals(100,user1.getHighestScore());
         assertEquals(5,user1.getAverageGuesses());
+
+        user1.updateStats(2,5);
+        assertEquals(2, user1.getTotalGamesPlayed());
+        assertEquals(100,user1.getHighestScore());
+        assertEquals(5,user1.getAverageGuesses());
     }
 
     @Test
