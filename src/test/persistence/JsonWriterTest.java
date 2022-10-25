@@ -11,6 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class JsonWriterTest extends JsonTest{
+
+    // Method was taken from JsonWriterTest class in:
+    // https://github.com/stleary/JSON-java
     @Test
     void testWriterInvalidFile() {
         try {
@@ -23,6 +26,8 @@ public class JsonWriterTest extends JsonTest{
         }
     }
 
+    // Method was taken from JsonWriterTest class in:
+    // https://github.com/stleary/JSON-java
     @Test
     void testWriterEmptyUserDatabase() {
         try {
@@ -40,6 +45,8 @@ public class JsonWriterTest extends JsonTest{
         }
     }
 
+    // Method was taken from JsonWriterTest class in:
+    // https://github.com/stleary/JSON-java
     @Test
     void testWriterGeneralUserDatabase() {
         try {

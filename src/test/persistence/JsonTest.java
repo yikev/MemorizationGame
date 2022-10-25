@@ -4,6 +4,8 @@ import model.UserAccount;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// Class was taken from JsonTest in:
+// https://github.com/stleary/JSON-java
 public class JsonTest {
     protected void checkUser(String name, int highestScore, int totalGamesPlayed,
                               double averageGuesses, UserAccount user) {

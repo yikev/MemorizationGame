@@ -51,6 +51,8 @@ public class UserDatabase implements Writable {
         users.add(user);
     }
 
+    // Method was taken from WorkRoom class in:
+    // https://github.com/stleary/JSON-java
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -58,6 +60,8 @@ public class UserDatabase implements Writable {
         return json;
     }
 
+    // Method was taken from WorkRoom class in:
+    // https://github.com/stleary/JSON-java
     /*
      * EFFECTS:  UserAccounts in current UserDatabase stored in jsonArray.
      */

@@ -75,6 +75,8 @@ public class UserAccount implements Writable {
         totalGamesPlayed++;
     }
 
+    // Method was taken from Thingy class in:
+    // https://github.com/stleary/JSON-java
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

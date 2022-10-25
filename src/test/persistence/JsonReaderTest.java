@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonReaderTest extends JsonTest{
 
+    // Method was taken from JsonReaderTest class in:
+    // https://github.com/stleary/JSON-java
     @Test
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
@@ -22,6 +24,8 @@ public class JsonReaderTest extends JsonTest{
         }
     }
 
+    // Method was taken from JsonReaderTest class in:
+    // https://github.com/stleary/JSON-java
     @Test
     void testReaderEmptyUserDatabase() {
         JsonReader reader = new JsonReader("./data/testReaderEmptyUserDatabase.json");
@@ -33,6 +37,8 @@ public class JsonReaderTest extends JsonTest{
         }
     }
 
+    // Method was taken from JsonReaderTest class in:
+    // https://github.com/stleary/JSON-java
     @Test
     void testReaderGeneralUserDatabase() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralUserDatabase.json");
