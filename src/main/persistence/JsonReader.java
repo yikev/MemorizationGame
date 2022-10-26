@@ -14,20 +14,27 @@ import java.util.stream.Stream;
 public class JsonReader {
     private String source;
 
-    // EFFECTS: constructs reader to read from source file
+    // Method was taken from JsonReader class in:
+    // https://github.com/stleary/JSON-java
+    // EFFECTS:  constructs JsonReader to read from file source.
     public JsonReader(String source) {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
-    // throws IOException if an error occurs reading data from file
+    // Method was taken from JsonReader class in:
+    // https://github.com/stleary/JSON-java
+    // EFFECTS:  Reads UserDatabase from source file and returns it.
+    //           IOException thrown if error during readFile(source).
     public UserDatabase read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseUserBase(jsonObject);
     }
 
-    // EFFECTS: reads source file as string and returns it
+    // Method was taken from JsonReader class in:
+    // https://github.com/stleary/JSON-java
+    // EFFECTS:  Reads source file as string and returns it.
+    //           IOException thrown if error during readFile(source).
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
@@ -38,32 +45,37 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // Method was taken from JsonReader class in:
+    // https://github.com/stleary/JSON-java
+    // EFFECTS: Parses UserDatabase from JSON object and returns it.
     private UserDatabase parseUserBase(JSONObject jsonObject) {
-        //String name = jsonObject.getString("name");
-        UserDatabase ub = new UserDatabase();
-        addUsers(ub, jsonObject);
-        return ub;
+        UserDatabase udb = new UserDatabase();
+        addUsers(udb, jsonObject);
+        return udb;
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingies from JSON object and adds them to workroom
-    private void addUsers(UserDatabase ub, JSONObject jsonObject) {
+    // Method was taken from JsonReader class in:
+    // https://github.com/stleary/JSON-java
+    // MODIFIES: udb, UserDatabase
+    // EFFECTS:  Parses UserAccounts from JSON object and adds them to UserDataBase.
+    private void addUsers(UserDatabase udb, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("users");
         for (Object json : jsonArray) {
             JSONObject nextUser = (JSONObject) json;
-            addUser(ub, nextUser);
+            addUser(udb, nextUser);
         }
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
-    private void addUser(UserDatabase ub, JSONObject jsonObject) {
+    // Method was taken from JsonReader class in:
+    // https://github.com/stleary/JSON-java
+    // MODIFIES: udb, UserDatabase
+    // EFFECTS:  Parses UserAccount from JSON object and adds it to UserDatabase.
+    private void addUser(UserDatabase udb, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         UserAccount user = new UserAccount(name);
         user.setHighestScore(jsonObject.getInt("score"));
         user.setTotalGamesPlayed(jsonObject.getInt("games played"));
         user.setAverageGuesses(jsonObject.getDouble("average guesses"));
-        ub.addUser(user);
+        udb.addUser(user);
     }
 }

@@ -3,18 +3,18 @@ package model;
 import java.util.ArrayList;
 
 public class GameBoard {
-    private int totalCards;
     private static int CORRECT_GUESS = 40;
     private static int INITIAL_SCORE = 100;
     private static int WRONG_GUESS = CORRECT_GUESS / -2;
+    private int totalCards;
     private int score;
-    private int[] gameCards;
-    private int[][] hiddenCards;
     private int columns;
     private int rows = 2;
     private int guess1;
     private int guess2;
     private int totalGuesses;
+    private int[] gameCards;
+    private int[][] hiddenCards;
     private UserAccount user;
     private UserDatabase userBase;
 
@@ -103,6 +103,10 @@ public class GameBoard {
         }
 
         return leaderboard;
+    }
+
+    public void setUserBase(UserDatabase userBase) {
+        this.userBase = userBase;
     }
 
     /*
@@ -306,9 +310,5 @@ public class GameBoard {
         user = newUser;
 
         return true;
-    }
-
-    public void setUserBase(UserDatabase userBase) {
-        this.userBase = userBase;
     }
 }

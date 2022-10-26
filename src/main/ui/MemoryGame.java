@@ -16,6 +16,8 @@ public class MemoryGame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
+    // Method was taken from WorkRoomApp class in:
+    // https://github.com/stleary/JSON-java
     public MemoryGame() throws FileNotFoundException {
         runGame();
     }

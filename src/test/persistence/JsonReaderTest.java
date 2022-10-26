@@ -33,7 +33,7 @@ public class JsonReaderTest extends JsonTest{
             UserDatabase ud = reader.read();
             assertEquals(0, ud.getSize());
         } catch (IOException e) {
-            fail("Couldn't read from file");
+            fail("File reading failed.");
         }
     }
 
@@ -49,7 +49,7 @@ public class JsonReaderTest extends JsonTest{
             checkUser("POP", 460,1, 3, users.get(0));
             checkUser("YRO", 700,1, 4, users.get(1));
         } catch (IOException e) {
-            fail("Couldn't read from file");
+            fail("File reading failed.");
         }
     }
 }
