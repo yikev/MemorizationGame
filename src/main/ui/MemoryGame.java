@@ -53,7 +53,7 @@ public class MemoryGame {
     public String displayMenu() {
         return "Type 'p' to play\n 's' to check your stats\n 'l' to check leaderboards\n"
                 + "'f' to find a user and check their stats\n"
-                + "'c' to change players\n 'save' to save game \n"
+                + "'c' to change players\n 'save' to save user stats \n"
                 + "'load' to load userbase \n 'q' to quit\n";
     }
 

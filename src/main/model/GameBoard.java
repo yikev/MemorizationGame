@@ -23,8 +23,8 @@ public class GameBoard {
      * EFFECTS: Constructs a MatchingGame with a given UserAccount and totalCards.
      */
     public GameBoard(String name, int totalCards) {
-        userBase = new UserDatabase();
         this.totalCards = totalCards;
+        userBase = new UserDatabase();
         gameCards = new int[totalCards];
         hiddenCards = new int[2][totalCards / 2];
         user = new UserAccount(name);
@@ -115,7 +115,6 @@ public class GameBoard {
      * EFFECTS:  Changes the total number of cards in the game board.
      */
     public void changeTotalCards(int totalCards) {
-
         this.totalCards = totalCards;
         score = totalCards * INITIAL_SCORE;
         gameCards = new int[totalCards];
