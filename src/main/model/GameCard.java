@@ -10,7 +10,6 @@ public class GameCard extends JButton implements Writable {
     int coordinateY;
     int height;
     int width;
-    //Icon picture;
     JButton card;
     boolean isFound; //hidden card
 
