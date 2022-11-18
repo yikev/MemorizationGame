@@ -6,17 +6,22 @@ public class GameBoard {
     private static int CORRECT_GUESS = 40;
     private static int INITIAL_SCORE = 100;
     private static int WRONG_GUESS = CORRECT_GUESS / -2;
+    private static String BREAK_LINE = "<br/>";
     private int totalCards;
     private int score;
-    private int columns;
-    private int rows = 2;
-    private int guess1;
-    private int guess2;
+    private int columns;                      //saved for console use(p1)
+    private int rows = 2;                     //saved for console use(p1)
+    private int guess1;                       //saved for console use(p1)
+    private int guess2;                       //saved for console use(p1)
     private int totalGuesses;
+    private int correctGuesses;
     private int[] gameCards;
-    private int[][] hiddenCards;
+    private int[] hiddenCards;
+    private int[][] hiddenCardsConsole;              //saved for console use(p1)
     private UserAccount user;
     private UserDatabase userBase;
+    private boolean gameStarted;
+    private SaveState save;
 
     /*
      * REQUIRES: totalCards must be an even number. There must be at least 2 cards.
@@ -26,16 +31,19 @@ public class GameBoard {
         this.totalCards = totalCards;
         userBase = new UserDatabase();
         gameCards = new int[totalCards];
-        hiddenCards = new int[2][totalCards / 2];
+        hiddenCardsConsole = new int[2][totalCards / 2];             //saved for console use(p1)
         user = new UserAccount(name);
         userBase.addUser(user);
         totalGuesses = 0;
-        columns = totalCards / 2;
+        correctGuesses = 0;
+        columns = totalCards / 2;                             //saved for console use(p1)
         score = totalCards * INITIAL_SCORE;
+        gameStarted = false;
+        save = new SaveState(score,correctGuesses,totalGuesses,gameCards,hiddenCards);
     }
 
-    public int[][] getHiddenCards() {
-        return hiddenCards;
+    public int[][] getHiddenCardsConsole() {
+        return hiddenCardsConsole;
     }
 
     public int getRows() {
@@ -78,12 +86,20 @@ public class GameBoard {
         return userBase;
     }
 
+    public SaveState getSave() {
+        return save;
+    }
+
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
     /*
      * EFFECTS: Shows the leaderboards. Sorts the scores from
      *          highest to lowest.
      */
     public String getLeaderboards() {
-        String leaderboard = "Leaderboards \n";
+        String leaderboard = "<html>Leaderboards" + BREAK_LINE;
         ArrayList<UserAccount> tempList = new ArrayList<>(userBase.getList());
 
         while (tempList.size() != 0) {
@@ -99,14 +115,37 @@ public class GameBoard {
                 }
             }
             tempList.remove(index);
-            leaderboard += tempUser + " " + tempHighest + "\n";
+            leaderboard += tempUser + " " + tempHighest + BREAK_LINE;
         }
+
+        leaderboard += "</html>";
 
         return leaderboard;
     }
 
     public void setUserBase(UserDatabase userBase) {
         this.userBase = userBase;
+    }
+
+    public void setSaveState(SaveState save) {
+        changeTotalCards(save.getGameCards().length);
+        gameCards = save.getGameCards();
+        hiddenCards = save.getHiddenCards();
+        score = save.getScore();
+        correctGuesses = save.getCorrectGuesses();
+        totalGuesses = save.getTotalGuesses();
+        gameStarted = true;
+    }
+
+    /*
+     * MODIFIES: this.
+     * EFFECTS:  Removes the most recently added UserAccount. Sets the UserAccount
+     *           to the last UserAccount in the UserBase
+     */
+    public void loadLastUser() {
+        this.user = null;
+        userBase.removeLastUser();
+        this.user = userBase.getList().get(userBase.getSize() - 1);
     }
 
     /*
@@ -118,9 +157,12 @@ public class GameBoard {
         this.totalCards = totalCards;
         score = totalCards * INITIAL_SCORE;
         gameCards = new int[totalCards];
+        hiddenCards = new int[totalCards];
         columns = totalCards / 2;
-        hiddenCards = new int[2][totalCards / 2];
+        hiddenCardsConsole = new int[2][totalCards / 2];          //saved for console use
         totalGuesses = 0;
+        correctGuesses = 0;
+        gameStarted = false;
     }
 
     /*
@@ -139,7 +181,7 @@ public class GameBoard {
      */
     public void updateUser() {
         user.updateStats(getScore(),getTotalGuesses());
-        resetGame();
+        //resetGame();
     }
 
     /*
@@ -155,6 +197,8 @@ public class GameBoard {
         guess1 = 0;
         guess2 = 0;
         totalGuesses = 0;
+        correctGuesses = 0;
+        gameStarted = false;
     }
 
     /*
@@ -163,8 +207,20 @@ public class GameBoard {
      * EFFECTS:  Sets the totalCards value and initalizesCards.
      */
     public void startGame(int numPairs) {
+        changeTotalCards(numPairs);
+        initializeCards();
+        gameStarted = true;
+    }
+
+    /*
+     * REQUIRES: numPairs must greater than 0.
+     * MODIFIES: this
+     * EFFECTS:  Sets the totalCards value and initalizesCards.
+     */
+    public void startGameConsole(int numPairs) {
         changeTotalCards(numPairs * 2);
         initializeCards();
+        gameStarted = true;
     }
 
     /*
@@ -226,7 +282,7 @@ public class GameBoard {
             guess2 = gameCards[row * columns + col];
         }
 
-        hiddenCards[row][col] = gameCards[row * columns + col];
+        hiddenCardsConsole[row][col] = gameCards[row * columns + col];
     }
 
     /*
@@ -240,7 +296,7 @@ public class GameBoard {
         int row = Integer.parseInt(guess.substring(0,1)) - 1;
         int col = (char) (guess.substring(1).toLowerCase().charAt(0) - 49) - '0';
 
-        hiddenCards[row][col] = 0;
+        hiddenCardsConsole[row][col] = 0;
     }
 
     /*
@@ -265,7 +321,28 @@ public class GameBoard {
      * EFFECTS:  Checks if the guesses were correct. If incorrect, hides the
      *           guessed cards. Updates the score appropriately.
      */
-    public void checkGuesses(String guess1, String guess2) {
+    public boolean checkGuesses(int guess1, int guess2) {
+        if (gameCards[guess1] == gameCards[guess2]) {
+            hiddenCards[guess1] = 1;
+            hiddenCards[guess2] = 1;
+            correctGuesses++;
+            updateScore(CORRECT_GUESS);
+            return true;
+        } else {
+            updateScore(WRONG_GUESS);
+            return false;
+        }
+    }
+
+    /*
+     * REQUIRES: guess must be in the format 'numberletter' (such as 1a).
+     *           guess also must be in bounds of both axis. If it is the 2nd
+     *           guess, guess must not be the same as the first guess.
+     * MODIFIES: this
+     * EFFECTS:  Checks if the guesses were correct. If incorrect, hides the
+     *           guessed cards. Updates the score appropriately.
+     */
+    public void checkGuessesConsole(String guess1, String guess2) {
         if (getGuess1() == getGuess2()) {
             updateScore(CORRECT_GUESS);
         } else {
@@ -280,16 +357,34 @@ public class GameBoard {
      * EFFECTS:  Checks if all pairs of cards have been found. If so,
      *           update the user's stats.
      */
-    public boolean isGameOver() {
+    public boolean isGameOverConsole() {
         for (int i = 0; i < getRows(); i++) {
             for (int j = 0; j < getColumns(); j++) {
-                if (getHiddenCards()[i][j] == 0) {
+                if (getHiddenCardsConsole()[i][j] == 0) {
                     return false;
                 }
             }
         }
         updateUser();
         return true;
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS:  Checks if all pairs of cards have been found. If so,
+     *           update the user's stats.
+     */
+    public boolean isGameOver() {
+        return correctGuesses * 2 >= totalCards;
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS:  Updates the save state. Updates the score, correct guesses,
+     *           total guesses, game cards, and hidden cards
+     */
+    public void saveGame() {
+        save.updateSaveState(score,correctGuesses,totalGuesses,gameCards,hiddenCards);
     }
 
     /*
@@ -310,4 +405,6 @@ public class GameBoard {
 
         return true;
     }
+
+
 }

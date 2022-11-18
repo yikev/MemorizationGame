@@ -16,13 +16,13 @@ class GameBoardTest {
     @BeforeEach
     void runBefore() {
         gb1 = new GameBoard("user1", 10);
-        gb1.startGame(10);
+        gb1.startGameConsole(10);
 
         gb2 = new GameBoard("user2", 2);
-        gb2.startGame(1);
+        gb2.startGameConsole(1);
 
         gb3 = new GameBoard("user3", 5);
-        gb3.startGame(5);
+        gb3.startGameConsole(5);
     }
 
     @Test
@@ -81,28 +81,23 @@ class GameBoardTest {
         assertTrue(gameCardsList.contains(1));
     }
 
-//    @Test
-//    void testDisplayCards() {
-//
-//    }
-
     @Test
     void testRevealCards() {
         gb2.revealCard("1a", 1);             //this game only contains 2 cards,
                                                               //so only one card value: 1
-        assertEquals(1,gb2.getHiddenCards()[0][0]);  //guess 1a is [0][0] and it should be "face up" show its
-        assertEquals(0,gb2.getHiddenCards()[1][0]);  //card value.
+        assertEquals(1,gb2.getHiddenCardsConsole()[0][0]);  //guess 1a is [0][0] and it should be "face up" show its
+        assertEquals(0,gb2.getHiddenCardsConsole()[1][0]);  //card value.
     }
 
     @Test
     void testHideCard() {
         gb2.revealCard("1a", 1);
-        assertEquals(1,gb2.getHiddenCards()[0][0]);  //reveal card
-        assertEquals(0,gb2.getHiddenCards()[1][0]);
+        assertEquals(1,gb2.getHiddenCardsConsole()[0][0]);  //reveal card
+        assertEquals(0,gb2.getHiddenCardsConsole()[1][0]);
 
         gb2.hideCard("1a");
-        assertEquals(0,gb2.getHiddenCards()[0][0]);  //hide card
-        assertEquals(0,gb2.getHiddenCards()[1][0]);
+        assertEquals(0,gb2.getHiddenCardsConsole()[0][0]);  //hide card
+        assertEquals(0,gb2.getHiddenCardsConsole()[1][0]);
     }
 
     @Test
@@ -123,12 +118,12 @@ class GameBoardTest {
         int gb1initialScore = gb1.getScore();
         int correctGuess = 40;
         int wrongGuess = correctGuess / -2;
-        gb2.checkGuesses("1a","2a");
+        gb2.checkGuessesConsole("1a","2a");
         assertEquals(initialScore + correctGuess, gb2.getScore());
 
         gb1.revealCard("1a", 1);
         gb1.revealCard("2a",2);
-        gb1.checkGuesses("1a","2a");
+        gb1.checkGuessesConsole("1a","2a");
         assertEquals(gb1initialScore + wrongGuess, gb1.getScore());
     }
 
@@ -136,21 +131,21 @@ class GameBoardTest {
     void testIsGameOver() {
         gb2.revealCard("1a",1);
         gb2.revealCard("2a", 2);
-        assertTrue(gb2.isGameOver());
+        assertTrue(gb2.isGameOverConsole());
 
         gb1.revealCard("1a", 1);
         gb1.revealCard("2a", 2);
-        assertFalse(gb1.isGameOver());
+        assertFalse(gb1.isGameOverConsole());
     }
 
     @Test
     void testGetLeaderboards() {
         gb2.revealCard("1a",1);                //Play the game and finish it
         gb2.revealCard("2a", 2);
-        gb2.checkGuesses("1a","2a");
+        gb2.checkGuessesConsole("1a","2a");
         String userScore = Integer.toString(gb2.getScore());    //hold the user's final score before game resets
         assertEquals(240,gb2.getScore());
-        assertTrue(gb2.isGameOver());                           //Game is finished
+        assertTrue(gb2.isGameOverConsole());                           //Game is finished
 
         String user = gb2.getUser().getName();
         String leaderboard = gb2.getLeaderboards();

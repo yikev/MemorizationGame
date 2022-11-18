@@ -36,3 +36,52 @@ JsonSerializationDemo, https://github.com/stleary/JSON-java
 
 TellerApp, https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
+fireworks.jpg, https://www.vectorstock.com/royalty-free-vector/firework-icon-vector-28921354
+
+https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
+
+Swing Timer Tutorial, https://www.youtube.com/watch?v=XHd2s9hV8Tc&ab_channel=plzHelpM3
+
+## Instructions for Grader
+
+-You can generate the first required event related to adding Cards to the Gameboard by:
+
+1. Run the program. 
+2. Decline to load from save. Enter a name.
+3. Click "Play" button.
+4. Add pairs of cards with the "Add Pair" button.
+
+-You can generate the second required event related to adding Cards to a Gameboard by:
+
+1. Run the program.
+2. Decline to load from save. Enter a name.
+3. Click "Play" button.
+4. Remove pairs of cards with the "Remove Pair" button.
+
+Visual component:
+
+1. Run the program.
+2. Load game from save or decline and enter a name.
+3. If loaded from save state, simply finish the game.
+    1. If not click the "Play" button. Optionally, "Add Pair" or "Remove Pair" then click "Start" button.
+    2. Finish the game.
+4. Once the game is finished, there should be an image of fireworks.
+
+Saving: 
+
+1. Run the program.
+2. Decline to load from save. Enter a name.
+3. Click "Play" button. Optionally add/remove pairs of cards.
+4. Click "Start" button.
+5. Click "Save" button whenever during the game. Alternatively, 
+   click the "x" button to exit the game. The game will prompt to save or not.
+
+Loading:
+
+1. Run the program.
+2. An option will be given to load from save.
+
+
+
+
+

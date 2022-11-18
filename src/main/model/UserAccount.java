@@ -40,9 +40,9 @@ public class UserAccount implements Writable {
 //     *
 //     */
     public String getUserStats() {
-        return name + "'s Stats. \n" + "Highest Score: " + getHighestScore()
-                + "\n Average Guesses: " + getAverageGuesses() + "\n"
-                + "Games Played: " + getTotalGamesPlayed();
+        return "<html>" + name + "'s Stats. <br/>" + "Highest Score: " + getHighestScore()
+                + "<br/> Average Guesses: " + getAverageGuesses() + "<br/>"
+                + "Games Played: " + getTotalGamesPlayed() + "</html>";
     }
 
     public void setHighestScore(int highestScore) {

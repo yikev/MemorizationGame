@@ -1,5 +1,6 @@
 package persistence;
 
+import model.SaveState;
 import model.UserDatabase;
 import model.UserAccount;
 import org.json.JSONArray;
@@ -31,6 +32,15 @@ public class JsonReader {
         return parseUserBase(jsonObject);
     }
 
+    public SaveState readGameCards() throws IOException {
+        String jsonData = readFile(source);
+        if (jsonData.isEmpty()) {
+            return null;
+        }
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseGameCards(jsonObject);
+    }
+
     // Method was taken from JsonReader class in:
     // https://github.com/stleary/JSON-java
     // EFFECTS:  Reads source file as string and returns it.
@@ -54,6 +64,12 @@ public class JsonReader {
         return udb;
     }
 
+    private SaveState parseGameCards(JSONObject jsonObject) {
+        SaveState save = new SaveState();
+        addCards(save, jsonObject);
+        return save;
+    }
+
     // Method was taken from JsonReader class in:
     // https://github.com/stleary/JSON-java
     // MODIFIES: udb, UserDatabase
@@ -64,6 +80,37 @@ public class JsonReader {
             JSONObject nextUser = (JSONObject) json;
             addUser(udb, nextUser);
         }
+    }
+
+    private void addCards(SaveState save, JSONObject jsonObject) {
+        int[] gameCards;
+        int[] hiddenCards;
+
+        int i = 0;
+
+        save.setScore(jsonObject.getInt("score"));
+        save.setCorrectGuesses(jsonObject.getInt("guesses"));
+        save.setTotalGuesses(jsonObject.getInt("total"));
+
+        JSONArray jsonArrayGameCards = jsonObject.getJSONArray("cards");
+        JSONArray jsonArrayHiddenCards = jsonObject.getJSONArray("hidden cards");
+        gameCards = new int[jsonArrayGameCards.length()];
+        hiddenCards = new int[jsonArrayGameCards.length()];
+        for (Object json : jsonArrayGameCards) {
+            gameCards[i] = (int) json;
+            i++;
+        }
+
+        i = 0;
+
+        for (Object json : jsonArrayHiddenCards) {
+            hiddenCards[i] = (int) json;
+            i++;
+        }
+
+        save.setGameCards(gameCards);
+        save.setHiddenCards(hiddenCards);
+
     }
 
     // Method was taken from JsonReader class in:

@@ -1,10 +1,12 @@
 package persistence;
 
+import model.GameCard;
 import model.UserAccount;
 import model.UserDatabase;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,6 +34,7 @@ public class JsonWriterTest extends JsonTest{
     void testWriterEmptyUserDatabase() {
         try {
             UserDatabase ud = new UserDatabase();
+            ArrayList<GameCard> gc = new ArrayList<>();
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyUserDatabase.json");
             writer.open();
             writer.write(ud);

@@ -41,6 +41,12 @@ public class UserDatabase implements Writable {
         return "User does not exist.";
     }
 
+    public void print() {
+        for (UserAccount u : users) {
+            System.out.println(u.getUserStats());
+        }
+    }
+
     /*
      * REQUIRES: Cannot add a user that has a name that already
      *           exists in the UserDataBase.
@@ -49,6 +55,10 @@ public class UserDatabase implements Writable {
      */
     public void addUser(UserAccount user) {
         users.add(user);
+    }
+
+    public void removeLastUser() {
+        users.remove(users.size() - 1);
     }
 
     // Method was taken from WorkRoom class in:
