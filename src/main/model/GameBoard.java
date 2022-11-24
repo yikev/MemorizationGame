@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class GameBoard {
+    private static int MAXIMUM_COLUMNS = 8;
     private static int CORRECT_GUESS = 40;
     private static int INITIAL_SCORE = 100;
     private static int WRONG_GUESS = CORRECT_GUESS / -2;
@@ -14,6 +15,7 @@ public class GameBoard {
     private int guess1;                       //saved for console use(p1)
     private int guess2;                       //saved for console use(p1)
     private int totalGuesses;
+    private int guessNumber;
     private int correctGuesses;
     private int[] gameCards;
     private int[] hiddenCards;
@@ -40,6 +42,7 @@ public class GameBoard {
         score = totalCards * INITIAL_SCORE;
         gameStarted = false;
         save = new SaveState(score,correctGuesses,totalGuesses,gameCards,hiddenCards);
+        guessNumber = 0;
     }
 
     public int[][] getHiddenCardsConsole() {
@@ -127,14 +130,32 @@ public class GameBoard {
         this.userBase = userBase;
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS:  Loads the SaveState save from data/savestate.json
+     */
     public void setSaveState(SaveState save) {
-        changeTotalCards(save.getGameCards().length);
+        EventLog.getInstance().logEvent(new Event("Loading game..."));
+        //changeTotalCards(save.getGameCards().length);
+        setTotalCards(save.getGameCards().length);
         gameCards = save.getGameCards();
         hiddenCards = save.getHiddenCards();
         score = save.getScore();
         correctGuesses = save.getCorrectGuesses();
         totalGuesses = save.getTotalGuesses();
         gameStarted = true;
+        guessNumber = 0;
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS:  Sets the total cards to a given value.
+     */
+    public void setTotalCards(int totalCards) {
+        this.totalCards = totalCards;
+        score = totalCards * INITIAL_SCORE;
+        gameCards = new int[totalCards];
+        hiddenCards = new int[totalCards];
     }
 
     /*
@@ -143,6 +164,7 @@ public class GameBoard {
      *           to the last UserAccount in the UserBase
      */
     public void loadLastUser() {
+        EventLog.getInstance().logEvent(new Event("Loading previous user..."));
         this.user = null;
         userBase.removeLastUser();
         this.user = userBase.getList().get(userBase.getSize() - 1);
@@ -154,6 +176,11 @@ public class GameBoard {
      * EFFECTS:  Changes the total number of cards in the game board.
      */
     public void changeTotalCards(int totalCards) {
+        if ((totalCards - this.totalCards) < 0) {
+            EventLog.getInstance().logEvent(new Event("Removed a pair of cards."));
+        } else if ((totalCards - this.totalCards) > 0) {
+            EventLog.getInstance().logEvent(new Event("Added a pair of cards."));
+        }
         this.totalCards = totalCards;
         score = totalCards * INITIAL_SCORE;
         gameCards = new int[totalCards];
@@ -163,11 +190,12 @@ public class GameBoard {
         totalGuesses = 0;
         correctGuesses = 0;
         gameStarted = false;
+        guessNumber = 0;
     }
 
     /*
      * MODIFIES: this.
-     * EFFECTS: Updates the real time score of the game.
+     * EFFECTS:  Updates the real time score of the game.
      */
     public void updateScore(int score) {
         this.score += score;
@@ -181,7 +209,6 @@ public class GameBoard {
      */
     public void updateUser() {
         user.updateStats(getScore(),getTotalGuesses());
-        //resetGame();
     }
 
     /*
@@ -198,7 +225,9 @@ public class GameBoard {
         guess2 = 0;
         totalGuesses = 0;
         correctGuesses = 0;
+        guessNumber = 0;
         gameStarted = false;
+        EventLog.getInstance().logEvent(new Event("Game is reset."));
     }
 
     /*
@@ -207,7 +236,9 @@ public class GameBoard {
      * EFFECTS:  Sets the totalCards value and initalizesCards.
      */
     public void startGame(int numPairs) {
-        changeTotalCards(numPairs);
+        setTotalCards(numPairs);
+        EventLog.getInstance().logEvent(new Event("Game started with " + totalCards + " cards."));
+        //changeTotalCards(numPairs);
         initializeCards();
         gameStarted = true;
     }
@@ -327,8 +358,12 @@ public class GameBoard {
             hiddenCards[guess2] = 1;
             correctGuesses++;
             updateScore(CORRECT_GUESS);
+            EventLog.getInstance().logEvent(new Event("Correct guess for: " + guessToString(guess1)
+                    + " and " + guessToString(guess2)));
             return true;
         } else {
+            EventLog.getInstance().logEvent(new Event("Wrong guess for: " + guessToString(guess1)
+                    + " and " + guessToString(guess2)));
             updateScore(WRONG_GUESS);
             return false;
         }
@@ -375,7 +410,11 @@ public class GameBoard {
      *           update the user's stats.
      */
     public boolean isGameOver() {
-        return correctGuesses * 2 >= totalCards;
+        if (correctGuesses * 2 >= totalCards) {
+            EventLog.getInstance().logEvent(new Event("Game Finished"));
+            return true;
+        }
+        return false;
     }
 
     /*
@@ -385,6 +424,7 @@ public class GameBoard {
      */
     public void saveGame() {
         save.updateSaveState(score,correctGuesses,totalGuesses,gameCards,hiddenCards);
+        EventLog.getInstance().logEvent(new Event("Game saved."));
     }
 
     /*
@@ -401,10 +441,36 @@ public class GameBoard {
         }
         UserAccount newUser = new UserAccount(name);
         userBase.addUser(newUser);
+        EventLog.getInstance().logEvent(new Event("Changed user from: "
+                + user.getName() + " to " + newUser.getName()));
         user = newUser;
 
         return true;
     }
 
+    // Method was taken from LogPrinter class in:
+    // https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
+    public void printLog(EventLog el) {
+        for (Event next : el) {
+            System.out.println(next.toString() + "\n\n");
+        }
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS:  Converts a user guess to a string. The row and column numbers.
+     */
+    public String guessToString(int guess) {
+        int temp = guess;
+        int row = 1;
+
+        while (temp / MAXIMUM_COLUMNS != 0) {
+            row++;
+
+            temp /= MAXIMUM_COLUMNS;
+        }
+
+        return "Row:" + row + " Column:" + ((temp % MAXIMUM_COLUMNS) + 1);
+    }
 
 }

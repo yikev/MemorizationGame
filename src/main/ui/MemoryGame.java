@@ -5,7 +5,6 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -227,6 +226,7 @@ public class MemoryGame extends JFrame {
                 if (memoryGame.checkGuesses(one,two)) {
                     updateScoreAndCards(firstCard,secondCard);
                     if (memoryGame.isGameOver()) {
+                        memoryGame.updateUser();
                         celebrateWin();
                     }
                 } else {
@@ -362,9 +362,11 @@ public class MemoryGame extends JFrame {
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                         saveUserDataBase();
+                        memoryGame.printLog(EventLog.getInstance());
                         System.exit(0);
                     }
                 } else {
+                    memoryGame.printLog(EventLog.getInstance());
                     System.exit(0);
                 }
             }
@@ -389,7 +391,10 @@ public class MemoryGame extends JFrame {
             startButton.setVisible(false);
         });
 
-        quitButton.addActionListener(e -> System.exit(0));
+        quitButton.addActionListener(e -> {
+            memoryGame.printLog(EventLog.getInstance());
+            System.exit(0);
+        });
     }
 
     /*
@@ -411,6 +416,17 @@ public class MemoryGame extends JFrame {
         for (JButton button : gameCards) {
             button.setVisible(true);
             button.setEnabled(false);
+        }
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS:  Displays the game cards to the user. Game cards are enabled.
+     */
+    public void revealCardsAndEnable() {
+        for (JButton button : gameCards) {
+            button.setVisible(true);
+            button.setEnabled(true);
         }
     }
 
@@ -473,9 +489,9 @@ public class MemoryGame extends JFrame {
         gameOver.setVisible(false);
         gameEndImage.setVisible(false);
         scoreBoard.setVisible(false);
-        if (memoryGame.isGameStarted() && memoryGame.isGameOver()) {
-            memoryGame.updateUser();
-        }
+//        if (memoryGame.isGameStarted() && memoryGame.isGameOver()) {
+//            memoryGame.updateUser();
+//        }
         resetGame();
     }
 
@@ -498,6 +514,7 @@ public class MemoryGame extends JFrame {
                 p1.add(gameCards.get(gameCards.size() - 1));
                 gameCards.get(gameCards.size() - 1).setEnabled(false);
             }
+            memoryGame.changeTotalCards(gameCards.size());
         }
     }
 
@@ -518,6 +535,7 @@ public class MemoryGame extends JFrame {
         p1.remove(gameCards.get(gameCards.size() - 1));
         gameCards.remove(gameCards.size() - 1);
         xcoord -= 2 * CARD_WIDTH;
+        memoryGame.changeTotalCards(gameCards.size());
     }
 
     /*
@@ -828,11 +846,12 @@ public class MemoryGame extends JFrame {
      */
     private void loadUserDataBase() {
         try {
-            memoryGame.setSaveState(jsonReaderTwo.readGameCards());
             loadSavedGame(jsonReaderTwo.readGameCards());
+            memoryGame.setSaveState(jsonReaderTwo.readGameCards());
             memoryGame.setUserBase(jsonReader.read());
             System.out.println("Loaded " + " save from " + JSON_STORE);
             memoryGame.getUserBase().print();
+            revealCardsAndEnable();
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
@@ -845,7 +864,6 @@ public class MemoryGame extends JFrame {
     public void loadSavedGame(SaveState s) {
         hideMenu();
         menuButton.setVisible(true);
-        revealCards();
         getSavedCards(s);
 
         startButton.setVisible(false);
@@ -863,6 +881,8 @@ public class MemoryGame extends JFrame {
     public void getSavedCards(SaveState s) {
         int howManyCards = s.getGameCards().length;
         int index = 0;
+
+        System.out.println(howManyCards);
 
         if (8 - howManyCards > 0) {
             for (int i = 0; i < (8 - howManyCards) / 2; i++) {

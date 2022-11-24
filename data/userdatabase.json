@@ -1,6 +1,14 @@
-{"users": [{
-    "score": 0,
-    "games played": 0,
-    "average guesses": 0,
-    "name": "bob"
-}]}
+{"users": [
+    {
+        "score": 680,
+        "games played": 2,
+        "average guesses": 4,
+        "name": "bob"
+    },
+    {
+        "score": 0,
+        "games played": 0,
+        "average guesses": 0,
+        "name": "red"
+    }
+]}

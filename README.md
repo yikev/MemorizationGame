@@ -81,6 +81,48 @@ Loading:
 1. Run the program.
 2. An option will be given to load from save.
 
+##Phase 4: Task 2
+
+Event log sample:
+
+Wed Nov 23 20:17:16 PST 2022
+Removed a pair of cards.
+
+
+Wed Nov 23 20:17:16 PST 2022
+Removed a pair of cards.
+
+
+Wed Nov 23 20:17:18 PST 2022
+Removed a pair of cards.
+
+
+Wed Nov 23 20:17:19 PST 2022
+Added a pair of cards.
+
+
+Wed Nov 23 20:17:20 PST 2022
+Game started with 4 cards.
+
+
+Wed Nov 23 20:17:25 PST 2022
+Wrong guess for: Row:1 Column:2 and Row:1 Column:3
+
+
+Wed Nov 23 20:17:28 PST 2022
+Correct guess for: Row:1 Column:4 and Row:1 Column:3
+
+
+Wed Nov 23 20:17:31 PST 2022
+Correct guess for: Row:1 Column:2 and Row:1 Column:1
+
+
+Wed Nov 23 20:17:31 PST 2022
+Game Finished
+
+
+Wed Nov 23 20:17:32 PST 2022
+Game is reset.
 
 
 
