@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+//The game board which holds a current player, a database of players and
+//the game cards.
 public class GameBoard {
     private static int MAXIMUM_COLUMNS = 8;
     private static int CORRECT_GUESS = 40;
@@ -15,7 +17,6 @@ public class GameBoard {
     private int guess1;                       //saved for console use(p1)
     private int guess2;                       //saved for console use(p1)
     private int totalGuesses;
-    private int guessNumber;
     private int correctGuesses;
     private int[] gameCards;
     private int[] hiddenCards;
@@ -33,16 +34,15 @@ public class GameBoard {
         this.totalCards = totalCards;
         userBase = new UserDatabase();
         gameCards = new int[totalCards];
-        hiddenCardsConsole = new int[2][totalCards / 2];             //saved for console use(p1)
+        hiddenCardsConsole = new int[2][totalCards / 2];             //saved for console use(p2)
         user = new UserAccount(name);
         userBase.addUser(user);
         totalGuesses = 0;
         correctGuesses = 0;
-        columns = totalCards / 2;                             //saved for console use(p1)
+        columns = totalCards / 2;                             //saved for console use(p2)
         score = totalCards * INITIAL_SCORE;
         gameStarted = false;
         save = new SaveState(score,correctGuesses,totalGuesses,gameCards,hiddenCards);
-        guessNumber = 0;
     }
 
     public int[][] getHiddenCardsConsole() {
@@ -144,7 +144,6 @@ public class GameBoard {
         correctGuesses = save.getCorrectGuesses();
         totalGuesses = save.getTotalGuesses();
         gameStarted = true;
-        guessNumber = 0;
     }
 
     /*
@@ -190,7 +189,6 @@ public class GameBoard {
         totalGuesses = 0;
         correctGuesses = 0;
         gameStarted = false;
-        guessNumber = 0;
     }
 
     /*
@@ -225,7 +223,6 @@ public class GameBoard {
         guess2 = 0;
         totalGuesses = 0;
         correctGuesses = 0;
-        guessNumber = 0;
         gameStarted = false;
         EventLog.getInstance().logEvent(new Event("Game is reset."));
     }

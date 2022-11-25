@@ -26,10 +26,10 @@ public class MemoryGame extends JFrame {
     private static int CARD_HEIGHT = 110;
     private GameBoard memoryGame;
     //private Scanner input;
-    private JsonWriter jsonWriter;
-    private JsonWriter jsonWriterTwo;
-    private JsonReader jsonReader;
-    private JsonReader jsonReaderTwo;
+    private JsonWriter jsonWriterUserBase;
+    private JsonWriter jsonWriterSaveState;
+    private JsonReader jsonReaderUserBase;
+    private JsonReader jsonReaderSaveState;
     int xcoord = MINIMUM_CARD_XCOORDINATE;
     int ycoord = MINIMUM_CARD_YCOORDINATE;
     int guessNumber = 0;
@@ -61,10 +61,10 @@ public class MemoryGame extends JFrame {
     // Method was taken from WorkRoomApp class in:
     // https://github.com/stleary/JSON-java
     public MemoryGame() throws FileNotFoundException {
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonWriterTwo = new JsonWriter(JSON_STORE_SAVE);
-        jsonReader = new JsonReader(JSON_STORE);
-        jsonReaderTwo = new JsonReader(JSON_STORE_SAVE);
+        jsonWriterUserBase = new JsonWriter(JSON_STORE);
+        jsonWriterSaveState = new JsonWriter(JSON_STORE_SAVE);
+        jsonReaderUserBase = new JsonReader(JSON_STORE);
+        jsonReaderSaveState = new JsonReader(JSON_STORE_SAVE);
         choice = getUserChoice();
         initializeMainMenu();
         initializeMenuButtons();
@@ -79,6 +79,7 @@ public class MemoryGame extends JFrame {
         initializeGame(choice);
         whenUserExitsButton();
         startButton.setVisible(false);
+        removePairButton.setVisible(false);
     }
 
     public void getUserName() {
@@ -94,7 +95,7 @@ public class MemoryGame extends JFrame {
      */
     public int getUserChoice() {
         try {
-            if (jsonReaderTwo.readGameCards() == null) {
+            if (jsonReaderSaveState.readGameCards() == null) {
                 return 1;
             }
         } catch (IOException e) {
@@ -489,9 +490,6 @@ public class MemoryGame extends JFrame {
         gameOver.setVisible(false);
         gameEndImage.setVisible(false);
         scoreBoard.setVisible(false);
-//        if (memoryGame.isGameStarted() && memoryGame.isGameOver()) {
-//            memoryGame.updateUser();
-//        }
         resetGame();
     }
 
@@ -816,12 +814,12 @@ public class MemoryGame extends JFrame {
     private void saveUserDataBase() {
         try {
             memoryGame.saveGame();
-            jsonWriter.open();
-            jsonWriterTwo.open();
-            jsonWriter.write(memoryGame.getUserBase());
-            jsonWriterTwo.writeCards(memoryGame.getSave());
-            jsonWriter.close();
-            jsonWriterTwo.closeSaveState();
+            jsonWriterUserBase.open();
+            jsonWriterSaveState.open();
+            jsonWriterUserBase.write(memoryGame.getUserBase());
+            jsonWriterSaveState.writeCards(memoryGame.getSave());
+            jsonWriterUserBase.close();
+            jsonWriterSaveState.closeSaveState();
             System.out.println("Saved " + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
@@ -846,11 +844,10 @@ public class MemoryGame extends JFrame {
      */
     private void loadUserDataBase() {
         try {
-            loadSavedGame(jsonReaderTwo.readGameCards());
-            memoryGame.setSaveState(jsonReaderTwo.readGameCards());
-            memoryGame.setUserBase(jsonReader.read());
+            loadSavedGame(jsonReaderSaveState.readGameCards());
+            memoryGame.setSaveState(jsonReaderSaveState.readGameCards());
+            memoryGame.setUserBase(jsonReaderUserBase.read());
             System.out.println("Loaded " + " save from " + JSON_STORE);
-            memoryGame.getUserBase().print();
             revealCardsAndEnable();
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);

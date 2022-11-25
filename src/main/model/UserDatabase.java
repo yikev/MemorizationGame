@@ -6,6 +6,7 @@ import persistence.Writable;
 
 import java.util.ArrayList;
 
+// A user database of UserAccounts.
 public class UserDatabase implements Writable {
 
     private ArrayList<UserAccount> users;
@@ -41,12 +42,6 @@ public class UserDatabase implements Writable {
         return "User does not exist.";
     }
 
-    public void print() {
-        for (UserAccount u : users) {
-            System.out.println(u.getUserStats());
-        }
-    }
-
     /*
      * REQUIRES: Cannot add a user that has a name that already
      *           exists in the UserDataBase.
@@ -57,6 +52,10 @@ public class UserDatabase implements Writable {
         users.add(user);
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS:  Removes the last user in the list.
+     */
     public void removeLastUser() {
         users.remove(users.size() - 1);
     }

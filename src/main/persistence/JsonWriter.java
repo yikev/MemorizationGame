@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+//Data persistence, writes data.
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
@@ -34,6 +35,8 @@ public class JsonWriter {
         saveToFile(json.toString(TAB));
     }
 
+    // Method was taken from JsonWriter class in:
+    // https://github.com/stleary/JSON-java
     public void writeCards(SaveState game) {
         JSONObject json = game.toJson();
         saveToFileSaveState(json.toString(TAB));
@@ -45,6 +48,8 @@ public class JsonWriter {
         writer.close();
     }
 
+    // Method was taken from JsonWriter class in:
+    // https://github.com/stleary/JSON-java
     public void closeSaveState() {
         writerTwo.close();
     }
@@ -57,6 +62,10 @@ public class JsonWriter {
         writer.print(json);
     }
 
+    // Method was taken from JsonWriter class in:
+    // https://github.com/stleary/JSON-java
+    // MODIFIES: this
+    // EFFECTS:  Writes to file.
     private void saveToFileSaveState(String json) {
         writerTwo.print(json);
     }

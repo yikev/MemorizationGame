@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
+// An instance of the MemoryGame.
 public class SaveState implements Writable {
     int score;
     int correctGuesses;
@@ -27,6 +28,10 @@ public class SaveState implements Writable {
         this.hiddenCards = hiddenCards;
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Sets the score, correctGuesses, totalGuesses
+     */
     public void updateSaveState(int score, int correctGuesses, int totalGuesses, int[] gameCards, int[] hiddenCards) {
         this.score = score;
         this.correctGuesses = correctGuesses;

@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+// Data persistence, reads data.
 public class JsonReader {
     private String source;
 
@@ -32,6 +33,10 @@ public class JsonReader {
         return parseUserBase(jsonObject);
     }
 
+    // Method was taken from JsonReader class in:
+    // https://github.com/stleary/JSON-java
+    // EFFECTS:  Reads SaveState from source file and returns it.
+    //           IOException thrown if error during readFile(source).
     public SaveState readGameCards() throws IOException {
         String jsonData = readFile(source);
         if (jsonData.isEmpty()) {
@@ -64,6 +69,9 @@ public class JsonReader {
         return udb;
     }
 
+    // Method was taken from JsonReader class in:
+    // https://github.com/stleary/JSON-java
+    // EFFECTS: Parses SaveState from JSON object and returns it.
     private SaveState parseGameCards(JSONObject jsonObject) {
         SaveState save = new SaveState();
         addCards(save, jsonObject);
@@ -82,6 +90,10 @@ public class JsonReader {
         }
     }
 
+    // Method was taken from JsonReader class in:
+    // https://github.com/stleary/JSON-java
+    // MODIFIES: save, SaveState
+    // EFFECTS:  Parses GameCards from JSON object and adds them to SaveState.
     private void addCards(SaveState save, JSONObject jsonObject) {
         int[] gameCards;
         int[] hiddenCards;

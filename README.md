@@ -29,19 +29,6 @@ to make the user interface.
 * As a user, I would like the option to save all stats of all players.
 * As a user, I want to be able to re-open the application and have the same leaderboards/stats from my last session.
 
-
-## References
-
-JsonSerializationDemo, https://github.com/stleary/JSON-java 
-
-TellerApp, https://github.students.cs.ubc.ca/CPSC210/TellerApp
-
-fireworks.jpg, https://www.vectorstock.com/royalty-free-vector/firework-icon-vector-28921354
-
-https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
-
-Swing Timer Tutorial, https://www.youtube.com/watch?v=XHd2s9hV8Tc&ab_channel=plzHelpM3
-
 ## Instructions for Grader
 
 -You can generate the first required event related to adding Cards to the Gameboard by:
@@ -124,6 +111,25 @@ Game Finished
 Wed Nov 23 20:17:32 PST 2022
 Game is reset.
 
+##Phase 4: Task 3
 
+If I had more time these would be the changes I would make to improve my design:
 
+* Implement GameCard into GameBoard. In phase 3 I realized I needed to have GameCard objects to check if they were 
+"pressed" and "correct guesses". In console (phase 2), I simply just needed two arrays for this.
+* There is a lot of duplication amongst my methods in MemoryGame and GameBoard classes. Possibly refactor these
+duplications into another class or better designed methods.
+* My implementation of JSon was very messy. I created two JsonReaders/JsonWriters because I was pretty confused on how
+to implement it. I also should probably implement my persistence in GameBoard.
 
+## References
+
+JsonSerializationDemo, https://github.com/stleary/JSON-java
+
+TellerApp, https://github.students.cs.ubc.ca/CPSC210/TellerApp
+
+fireworks.jpg, https://www.vectorstock.com/royalty-free-vector/firework-icon-vector-28921354
+
+https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html
+
+Swing Timer Tutorial, https://www.youtube.com/watch?v=XHd2s9hV8Tc&ab_channel=plzHelpM3

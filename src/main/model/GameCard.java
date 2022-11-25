@@ -5,6 +5,7 @@ import persistence.Writable;
 
 import javax.swing.*;
 
+//Game cards which have a back side and a 'value' side.
 public class GameCard extends JButton implements Writable {
     int coordinateX;
     int coordinateY;

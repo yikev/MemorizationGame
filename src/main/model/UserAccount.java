@@ -3,6 +3,8 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+//A user who has a name, highest score, total games played,
+// and average number of guesses.
 public class UserAccount implements Writable {
     private String name;
     private int highestScore = 0;
