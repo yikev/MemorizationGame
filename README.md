@@ -29,7 +29,7 @@ to make the user interface.
 * As a user, I would like the option to save all stats of all players.
 * As a user, I want to be able to re-open the application and have the same leaderboards/stats from my last session.
 
-## Instructions for Grader
+## Instructions for Playing
 
 -You can generate the first required event related to adding Cards to the Gameboard by:
 
@@ -67,8 +67,6 @@ Loading:
 
 1. Run the program.
 2. An option will be given to load from save.
-
-##Phase 4: Task 2
 
 Event log sample:
 
@@ -111,9 +109,7 @@ Game Finished
 Wed Nov 23 20:17:32 PST 2022
 Game is reset.
 
-##Phase 4: Task 3
-
-If I had more time these would be the changes I would make to improve my design:
+Possible Improvements:
 
 * Implement GameCard into GameBoard. In phase 3 I realized I needed to have GameCard objects to check if they were 
 "pressed" and "correct guesses". In console (phase 2), I simply just needed two arrays for this.
