@@ -19,16 +19,6 @@ I'm choosing to make this memory game because I remember playing
 it when I was a kid and it was fun. Also, it seems like it could be challenging 
 to make the user interface. 
 
-## User Stories
-
-* As a user, I would like to be able to add more pairs of cards to the game board.
-* As a user, I want to see a list of high scores.
-* As a user, I want to see my *stats*, how many games I've played. How many guesses on average per game etc.
-* As a user, I would like to see other user's stats.
-* As a user, I would like the option to quit the current game and go back to the main menu.
-* As a user, I would like the option to save all stats of all players.
-* As a user, I want to be able to re-open the application and have the same leaderboards/stats from my last session.
-
 ## Instructions for Playing
 
 -You can generate the first required event related to adding Cards to the Gameboard by:
