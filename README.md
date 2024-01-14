@@ -58,6 +58,30 @@ Loading:
 1. Run the program.
 2. An option will be given to load from save.
 
+## Demonstration
+
+### Full Demo including saving
+
+Game initialization
+
+![Game initialization](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnhmaHQ2NnU1MGpsajAxaGc4bmdqMWoxYWloZmVrdmdnd2lia2YxNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/s5wNceSb0tjwNoSTnE/giphy.gif)
+
+Gameplay
+
+![Gameplay](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2d6MmEweDZwendqZHRpbDRycWp0ZzE5cm12bXBwanZwZzQ2MHEzNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hzmoUtoD8MpWxF3h35/giphy.gif)
+
+Save, quit, and loading save
+
+![Save, quit, and loading save](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXYydHllNzhzdnR0ZDNvYzR0bmx3bTZrZjI0bXF4dHQ2YXhyaGQ2dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CrUxygT17V3Ma3yu0E/giphy.gif)
+
+Changing Users
+
+![](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExc2Jta3FkNnQ0aHc4NGo5cWY0czBjdTlqMGFmaHFscTd5OTkyNmQ2aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XoaXrhrynLktLMtL05/giphy.gif)
+
+Gameplay continued
+
+![](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG52Zm80bmMxMzNzNDJ6bnltdnJoN3cyeGFpc2pkaGVsdHRwZzc5NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QhwWTLQEBiK8KeFRPK/giphy.gif)
+
 Event log sample:
 
 Wed Nov 23 20:17:16 PST 2022
